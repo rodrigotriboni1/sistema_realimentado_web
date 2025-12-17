@@ -2,7 +2,7 @@
 // CRITICAL: Atualize estas credenciais com os dados do seu banco na HostGator
 $host = "localhost"; 
 $dbname = "rodr1642_dinho"; 
-$username = "rodr1642_nougenic"; 
+$username = "rodr1642_dinho"; 
 $password = "8s7UTmd9Kc*o";
 
 try {
