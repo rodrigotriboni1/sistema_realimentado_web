@@ -1,4 +1,7 @@
 
+# Definir arquivos de índice padrão (evita erro 403 se o servidor não encontrar o arquivo padrão)
+DirectoryIndex index.php index.html
+
 # Prevenir listagem de diretórios
 Options -Indexes
 
@@ -16,22 +19,13 @@ AddDefaultCharset UTF-8
 </IfModule>
 
 # Remover a extensão .php da URL (opcional, para URLs mais limpas)
-# Exemplo: acessa /get_data.php através de /get_data
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule ^([^\.]+)$ $1.php [NC,L]
 
-# Forçar HTTPS (Recomendado para produção)
-# Remova o comentário das linhas abaixo se tiver SSL instalado
-# RewriteCond %{HTTPS} !=on
-# RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+# Proteger arquivos sensíveis (ajustado para compatibilidade, tente descomentar se necessário)
+# <FilesMatch "^\.">
+#    Order allow,deny
+#    Deny from all
+# </FilesMatch>
 
-# Proteger arquivos sensíveis (como .env ou .git se houver)
-<FilesMatch "^\.">
-    Order allow,deny
-    Deny from all
-</FilesMatch>
-<FilesMatch "^(composer\.json|package\.json|readme\.md|license\.txt)$">
-    Order allow,deny
-    Deny from all
-</FilesMatch>
