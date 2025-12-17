@@ -1,31 +1,25 @@
 
-# Definir arquivos de índice padrão (evita erro 403 se o servidor não encontrar o arquivo padrão)
-DirectoryIndex index.php index.html
+# Define qual arquivo abrir quando acessar a raiz (/)
+DirectoryIndex index.html
 
-# Prevenir listagem de diretórios
+# Previne que pessoas vejam a lista de arquivos da pasta
 Options -Indexes
 
-# Habilitar Rewrite Engine
 RewriteEngine On
 
-# Definir charset padrão
-AddDefaultCharset UTF-8
-
-# Configuração de CORS (Opcional - útil se acessar a API de outro domínio)
+# Configuração de CORS (Permite acesso externo à API se necessário)
 <IfModule mod_headers.c>
     Header set Access-Control-Allow-Origin "*"
     Header set Access-Control-Allow-Methods "GET, POST, OPTIONS"
     Header set Access-Control-Allow-Headers "Content-Type"
 </IfModule>
 
-# Remover a extensão .php da URL (opcional, para URLs mais limpas)
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME}.php -f
-RewriteRule ^([^\.]+)$ $1.php [NC,L]
+# Roteamento Inteligente (SPA Falback e Limpeza de URL)
 
-# Proteger arquivos sensíveis (ajustado para compatibilidade, tente descomentar se necessário)
-# <FilesMatch "^\.">
-#    Order allow,deny
-#    Deny from all
-# </FilesMatch>
+# 1. Se o arquivo solicitado (ex: style.css, script.js, get_data.php) EXISTIR, sirva-o diretamente.
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
 
+# 2. Se não existir, redireciona para index.html (bom para SPAs)
+RewriteRule ^ index.html [L]
