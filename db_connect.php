@@ -1,9 +1,9 @@
 <?php
 // CRITICAL: Atualize estas credenciais com os dados do seu banco na HostGator
 $host = "localhost"; 
-$dbname = "nome_do_banco"; 
-$username = "usuario_do_banco"; 
-$password = "senha_do_banco";
+$dbname = "rodr1642_nougenic"; 
+$username = "rodr1642_nougenic"; 
+$password = "8s7UTmd9Kc*o";
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
