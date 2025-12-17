@@ -1,8 +1,31 @@
 
-# TENTATIVA 3: A Mais Simples Possível
-# Muitas hospedagens bloqueiam comandos "Options" ou "Rewrite" se não estiverem configurados.
-# Vamos tentar apenas definir o arquivo inicial.
+# Definir arquivos de índice padrão (evita erro 403 se o servidor não encontrar o arquivo padrão)
+DirectoryIndex index.php index.html
 
-DirectoryIndex index.html index.php
+# Prevenir listagem de diretórios
+Options -Indexes
 
-# Se isso funcionar e o site abrir, podemos adicionar o restante aos poucos.
+# Habilitar Rewrite Engine
+RewriteEngine On
+
+# Definir charset padrão
+AddDefaultCharset UTF-8
+
+# Configuração de CORS (Opcional - útil se acessar a API de outro domínio)
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, POST, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type"
+</IfModule>
+
+# Remover a extensão .php da URL (opcional, para URLs mais limpas)
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+# Proteger arquivos sensíveis (ajustado para compatibilidade, tente descomentar se necessário)
+# <FilesMatch "^\.">
+#    Order allow,deny
+#    Deny from all
+# </FilesMatch>
+
