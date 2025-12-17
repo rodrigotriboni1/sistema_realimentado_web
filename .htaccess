@@ -1,25 +1,8 @@
 
-# Define qual arquivo abrir quando acessar a raiz (/)
-DirectoryIndex index.html
+# TENTATIVA 3: A Mais Simples Possível
+# Muitas hospedagens bloqueiam comandos "Options" ou "Rewrite" se não estiverem configurados.
+# Vamos tentar apenas definir o arquivo inicial.
 
-# Previne que pessoas vejam a lista de arquivos da pasta
-Options -Indexes
+DirectoryIndex index.html index.php
 
-RewriteEngine On
-
-# Configuração de CORS (Permite acesso externo à API se necessário)
-<IfModule mod_headers.c>
-    Header set Access-Control-Allow-Origin "*"
-    Header set Access-Control-Allow-Methods "GET, POST, OPTIONS"
-    Header set Access-Control-Allow-Headers "Content-Type"
-</IfModule>
-
-# Roteamento Inteligente (SPA Falback e Limpeza de URL)
-
-# 1. Se o arquivo solicitado (ex: style.css, script.js, get_data.php) EXISTIR, sirva-o diretamente.
-RewriteCond %{REQUEST_FILENAME} -f [OR]
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^ - [L]
-
-# 2. Se não existir, redireciona para index.html (bom para SPAs)
-RewriteRule ^ index.html [L]
+# Se isso funcionar e o site abrir, podemos adicionar o restante aos poucos.
