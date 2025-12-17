@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS measurements (
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     temperatura FLOAT NOT NULL,
     fluxo FLOAT NOT NULL,
-    pwm_cooler INT NOT NULL,
+    pwm_cooler INT NOT NULL,    
     estado_resistencia BOOLEAN NOT NULL,
     INDEX (timestamp)
 );

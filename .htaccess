@@ -1,0 +1,37 @@
+
+# Prevenir listagem de diretórios
+Options -Indexes
+
+# Habilitar Rewrite Engine
+RewriteEngine On
+
+# Definir charset padrão
+AddDefaultCharset UTF-8
+
+# Configuração de CORS (Opcional - útil se acessar a API de outro domínio)
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, POST, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type"
+</IfModule>
+
+# Remover a extensão .php da URL (opcional, para URLs mais limpas)
+# Exemplo: acessa /get_data.php através de /get_data
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+# Forçar HTTPS (Recomendado para produção)
+# Remova o comentário das linhas abaixo se tiver SSL instalado
+# RewriteCond %{HTTPS} !=on
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+# Proteger arquivos sensíveis (como .env ou .git se houver)
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+<FilesMatch "^(composer\.json|package\.json|readme\.md|license\.txt)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
